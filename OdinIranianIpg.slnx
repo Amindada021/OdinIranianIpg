@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/OdinIranianIpg/OdinIranianIpg.csproj" />
+  <Project Path="tests/OdinIranianIpg.Tests/OdinIranianIpg.Tests.csproj" />
+</Solution>

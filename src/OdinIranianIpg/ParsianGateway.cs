@@ -104,7 +104,8 @@ public sealed class ParsianGateway : IReversibleGateway
     private async Task<SoapResult?> CallAsync(string service, string operation, IEnumerable<(string Name, object Value)> fields,
         bool retryTransport, CancellationToken ct)
     {
-        XNamespace ns = ContractRoot + service;
+        // The reversal endpoint uses Reverse, but its SOAP contract uses Reversal.
+        XNamespace ns = ContractRoot + (service == "Reverse/ReversalService" ? "Reversal/ReversalService" : service);
         var envelope = new XDocument(new XElement(Soap + "Envelope", new XAttribute(XNamespace.Xmlns + "soap", Soap),
             new XElement(Soap + "Body", new XElement(ns + operation,
                 new XElement(ns + "requestData", fields.Select(f => new XElement(ns + f.Name, f.Value)))))));

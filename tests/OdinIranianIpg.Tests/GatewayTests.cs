@@ -79,10 +79,15 @@ public class GatewayTests
     [Fact]
     public async Task ParsianReverseUsesReversalServiceAndNeverFabricatesSuccess()
     {
-        var handler = new FakeHandler((request, _) =>
+        var handler = new FakeHandler((request, body) =>
         {
-            Assert.EndsWith("/Reverse/ReversalService.asmx", request.RequestUri!.AbsoluteUri);
-            return SoapResult("Reverse/ReversalService", "ReversalRequest", "<Status>0</Status><Token>888</Token>");
+            Assert.Equal("https://pec.shaparak.ir/NewIPGServices/Reverse/ReversalService.asmx", request.RequestUri!.AbsoluteUri);
+            XNamespace ns = "https://pec.Shaparak.ir/NewIPGServices/Reversal/ReversalService";
+            Assert.Equal("\"" + ns + "/ReversalRequest\"", request.Headers.GetValues("SOAPAction").Single());
+            var data = XDocument.Parse(body).Descendants(ns + "ReversalRequest").Single().Element(ns + "requestData")!;
+            Assert.Equal("secret&pin", data.Element(ns + "LoginAccount")!.Value);
+            Assert.Equal("888", data.Element(ns + "Token")!.Value);
+            return SoapResult("Reversal/ReversalService", "ReversalRequest", "<Status>0</Status><Token>888</Token>");
         });
         var gateway = Parsian(handler);
         Assert.True((await gateway.ReverseAsync(ParsianAttempt, gateway.ParseCallback(Callback()), Ct)).Success);

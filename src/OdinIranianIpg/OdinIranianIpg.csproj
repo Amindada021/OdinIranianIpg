@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <IsPackable>true</IsPackable>
     <PackageId>OdinIranianIpg</PackageId>
-    <Version>1.0.0</Version>
+    <Version>1.0.1</Version>
     <Authors>Amindada021</Authors>
     <Description>Extensible asynchronous Iranian payment gateway SDK for .NET 10.</Description>
     <PackageTags>payment;ipg;iran;zarinpal;parsian;odin;dotnet</PackageTags>

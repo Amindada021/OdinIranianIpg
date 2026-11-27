@@ -5,7 +5,7 @@ A small, extensible .NET 10 SDK for Iranian Internet Payment Gateways. No Persia
 ## Install (after publication)
 
 ```shell
-dotnet add package OdinIranianIpg --version 1.0.0
+dotnet add package OdinIranianIpg --version 1.0.1
 ```
 
 ## Providers
